@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".first.forget_question"
+    tools:ignore="Orientation"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="找回密码"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="密保问题"
+        android:textColor="#66ccff"
+        android:textSize="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints"
+        />
+    <LinearLayout
+        android:id="@+id/password_question"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="答案"
+        android:textColor="#66ccff"
+        android:textSize="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="25dp"/>
+    <EditText
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:hint="答案"
+        android:textColor="#000000"
+        android:textColorHint="#80000000"
+        android:textSize="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="20dp" />
+    <Button
+        android:id="@+id/find_yes"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/hdpi"
+        android:gravity="center"
+        android:text="确定"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

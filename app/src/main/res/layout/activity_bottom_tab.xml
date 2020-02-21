@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Bottom_tabActivity"
+    android:id="@+id/drawLayout"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include layout="@layout/title2"/>
+    <com.example.applicationtest.instor.CustomViewPager
+        android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+             android:layout_height="0dp"
+             android:layout_weight="1"
+        android:background="@color/colorPrimary">
+
+    </com.example.applicationtest.instor.CustomViewPager>
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+             android:background="@color/天依蓝"
+             android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+             >
+
+    </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/menu_fragment"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="start"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/DrawHeadPic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/illust_78192650_20191213_152203"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="25dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/userName_Draw"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center_horizontal"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@+id/friend_button"
+            tools:ignore="MissingConstraints"
+            />
+
+        <Button
+            android:id="@+id/friend_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            android:text="好友列表"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:background="@drawable/dialog_shape"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center_horizontal"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@+id/information_button"
+            tools:ignore="MissingConstraints"
+            />
+        <Button
+            android:id="@+id/information_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text3"
+            android:background="@drawable/dialog_shape"
+            android:text="编辑个人资料"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center_horizontal"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@+id/information_button"
+            tools:ignore="MissingConstraints"
+            />
+        <Button
+            android:id="@+id/close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text3"
+            android:background="@drawable/dialog_shape"
+            android:text="退出登录"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/text7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/information_button"
+            tools:ignore="MissingConstraints" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp">
+                    <ImageView
+                        android:id="@+id/setting"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom|center"
+                        android:scrollbarTrackHorizontal="@android:drawable/ic_menu_preferences"
+                        android:src="@android:drawable/ic_menu_preferences"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:text="设置"
+                        android:textSize="20dp"
+                        android:textColor="@color/酷炫黑" />
+</LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

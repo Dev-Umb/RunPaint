@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Change_back"
+        android:title="复位"
+        android:icon="@color/colorPrimary"
+        />
+        <item
+            android:id="@+id/Change_start"
+            android:title="卫星"
+            android:icon="@color/colorPrimary"
+            />
+        <item
+            android:id="@+id/Change_putong"
+            android:title="普通"
+            android:icon="@color/colorPrimary"
+            />
+    <item
+        android:id="@+id/Change_traffic"
+        android:title="交通图"
+        android:icon="@color/colorPrimary"
+        />
+    <item
+    android:id="@+id/Change_hot"
+    android:title="热力图"
+    android:icon="@color/colorPrimary"
+        />
+    <item
+        android:id="@+id/openDraw"
+        android:title="绘制"
+        />
+
+</menu>

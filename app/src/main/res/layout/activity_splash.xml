@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".first.SplashActivity"
+    android:id="@+id/re_left">
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/viewPager"
+        android:background="@color/colorPrimary"
+
+        />
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"/>
+
+<!--    </androidx.viewpager.widget.ViewPager>-->
+<!--    <me.relex.circleindicator.CircleIndicator-->
+<!--        android:id="@+id/circle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        app:ci_gravity="center"-->
+<!--        app:ci_drawable="@drawable/ball"-->
+<!--        app:ci_radius="10dp"-->
+<!--        app:ci_margin="5dp"-->
+<!--        app:ci_mode="outside"-->
+<!--        app:ci_background="#66ccff"-->
+<!--        app:ci_selected_background="#000000"-->
+<!--        />-->
+
+
+</RelativeLayout>

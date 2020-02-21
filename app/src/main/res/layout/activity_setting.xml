@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".setting.setting"
+    android:orientation="vertical"
+    android:background="@color/极简白">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <include layout="@layout/tiltle_theme"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主题设置"
+            android:layout_gravity="center"
+            android:textColor="@color/酷炫黑"
+            android:textSize="30dp"
+            android:id="@+id/主题设置"
+            />
+    </FrameLayout>
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/recycle"
+    tools:ignore="MissingConstraints"
+    android:padding="2dp"
+    android:scrollbarStyle="outsideOverlay"
+    android:scrollbars="vertical"
+    android:layout_gravity="top"
+    android:layout_marginTop="50dp"
+    >
+
+</androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

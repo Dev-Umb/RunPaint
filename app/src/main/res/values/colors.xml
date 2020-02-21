@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="jiemian">#045F8D</color>
+    <color name="fuYuan">#66ccff</color>
+    <color name="天依蓝">#66ccff</color>
+    <color name="活力橙">#FF9800</color>
+    <color name="阳光黄">#FFEB3B</color>
+    <color name="乐正红">#FF0000</color>
+    <color name="极简白">#ffffff</color>
+    <color name="酷炫黑">#000000</color>
+</resources>

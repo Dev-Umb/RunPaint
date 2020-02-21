@@ -44,7 +44,5 @@
 
 截图
 
-<img src="F:\文档\qqDownload\MobileFile\Screenshot_2020-02-21-22-02-44-351_com.example.ap.jpg" alt="Screenshot_2020-02-21-22-02-44-351_com.example.ap" style="zoom: 25%;" /><img src="F:\文档\qqDownload\MobileFile\Screenshot_2020-02-21-22-02-49-867_com.example.ap.jpg" alt="Screenshot_2020-02-21-22-02-49-867_com.example.ap" style="zoom:25%;" /><img src="F:\文档\qqDownload\MobileFile\Screenshot_2020-02-21-22-01-28-777_com.example.ap.jpg" alt="Screenshot_2020-02-21-22-01-28-777_com.example.ap" style="zoom:25%;" />
 
-<img src="F:\文档\qqDownload\MobileFile\Screenshot_2020-02-21-22-01-32-121_com.example.ap.jpg" alt="Screenshot_2020-02-21-22-01-32-121_com.example.ap" style="zoom:25%;" /><img src="F:\文档\qqDownload\MobileFile\Screenshot_2020-02-21-22-01-57-783_com.example.ap.jpg" alt="Screenshot_2020-02-21-22-01-57-783_com.example.ap" style="zoom:25%;" /><img src="F:\文档\qqDownload\MobileFile\Screenshot_2020-02-21-22-02-32-470_com.example.ap.jpg" alt="Screenshot_2020-02-21-22-02-32-470_com.example.ap" style="zoom:25%;" />
 

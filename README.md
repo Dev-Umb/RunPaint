@@ -44,5 +44,5 @@
 
 截图
 
- ![image](https://github.com/farewell12345/run/edit/master/01.jpg);
+
 

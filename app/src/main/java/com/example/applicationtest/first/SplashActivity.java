@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity implements ViewPager.OnPag
         view4 = View.inflate(SplashActivity.this,R.layout.activity_sing_in,null);
         viewList.add(view1);
         viewList.add(view2);
-        viewList.add(view3);
+        //viewList.add(view3);
         viewList.add(view4);
         Adapter adapter = new Adapter(viewList);
         viewPager.setAdapter(adapter);
@@ -87,7 +87,7 @@ public class SplashActivity extends AppCompatActivity implements ViewPager.OnPag
 
         CircleIndicator indicator =findViewById(R.id.indicator);
         indicator.setViewPager(viewPager);
-        indicator.createIndicators(4,0);
+        indicator.createIndicators(3,0);
         indicator.animatePageSelected(0);
         adapter.registerDataSetObserver(indicator.getDataSetObserver());
 

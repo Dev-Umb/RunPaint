@@ -3,5 +3,5 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/view2"
-    android:background="@drawable/illust_78192650_20191213_152203">
+    android:background="@drawable/function2">
 </LinearLayout>

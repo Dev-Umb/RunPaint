@@ -1,5 +1,6 @@
 package com.example.applicationtest.setting;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -31,12 +32,7 @@ public class setting extends AppCompatActivity {
         frameLayout =findViewById( R.id.side_title2);
         textView=findViewById(R.id.主题设置);
         frameLayout.setBackgroundColor(Color.rgb( Bottom_tabActivity.red_colors,Bottom_tabActivity.Green_colors,Bottom_tabActivity.blue_colors));
-        if ((Bottom_tabActivity.red_colors+Bottom_tabActivity.Green_colors+Bottom_tabActivity.blue_colors)!=0)
-        {
-            textView.setTextColor(Color.rgb(255,255,255));
-        }else {
-            textView.setTextColor(Color.rgb(0,0,0));
-        }
+
         RecyclerView recyclerView = findViewById(R.id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new NomalAdapter(data,red,blue,green));
@@ -47,6 +43,13 @@ public class setting extends AppCompatActivity {
                 finish();
             }
         });
+        if (Bottom_tabActivity.red_colors==0&&Bottom_tabActivity.Green_colors==0&&Bottom_tabActivity.blue_colors==0)
+        {
+            textView.setTextColor(Color.rgb(255,255,255));
+            radioButton.setButtonTintList(ColorStateList.valueOf(Color.rgb(255,255,255)));
+        }else {
+            textView.setTextColor(Color.rgb(0,0,0));
+        }
     }
     private List<String> intData()
     {

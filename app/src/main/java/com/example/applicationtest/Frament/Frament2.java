@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -21,17 +20,10 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 public class Frament2 extends Fragment {
-    private com.tencent.smtt.sdk.WebView mwebView;
+    public static com.tencent.smtt.sdk.WebView mwebView;
     private com.tencent.smtt.sdk.WebSettings settings;
-    private Button back;
     @Override
     public void onStart() {
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mwebView.goBack();
-            }
-        });
         super.onStart();
     }
 
@@ -42,7 +34,6 @@ public class Frament2 extends Fragment {
         mwebView = contentView.findViewById(R.id.webView);
         init();
         mwebView.loadUrl("https://www.runners.cn/");
-       // mwebView.loadUrl("http://debugtbs.qq.com/");
         final SwipeRefreshLayout swipeRefreshLayout = contentView.findViewById(R.id.webView_Refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -68,10 +59,10 @@ public class Frament2 extends Fragment {
                 }
             }
         });
-        back = contentView.findViewById(R.id.webView_back);
 
         return contentView;
     }
+
     private void init()
     {
         settings = mwebView.getSettings();

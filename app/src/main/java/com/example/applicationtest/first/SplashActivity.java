@@ -22,7 +22,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class SplashActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
     private ViewPager viewPager;
     private List<View> viewList;
-    private View view1,view2,view3,view4;//切换页面
+    private View view1,view2,view4;//切换页面
     private int currentItem;//默认首页
     private Button startButton;//进入按键
     private boolean flag;
@@ -49,11 +49,9 @@ public class SplashActivity extends AppCompatActivity implements ViewPager.OnPag
         viewList  = new ArrayList<View>();
         view1 = View.inflate(SplashActivity.this,R.layout.view1,null);
         view2 = View.inflate(SplashActivity.this,R.layout.view2,null);
-        view3 = View.inflate(SplashActivity.this,R.layout.view3,null);
         view4 = View.inflate(SplashActivity.this,R.layout.activity_sing_in,null);
         viewList.add(view1);
         viewList.add(view2);
-        //viewList.add(view3);
         viewList.add(view4);
         Adapter adapter = new Adapter(viewList);
         viewPager.setAdapter(adapter);
@@ -87,7 +85,7 @@ public class SplashActivity extends AppCompatActivity implements ViewPager.OnPag
 
         CircleIndicator indicator =findViewById(R.id.indicator);
         indicator.setViewPager(viewPager);
-        indicator.createIndicators(3,0);
+        indicator.createIndicators(viewList.size(),0);
         indicator.animatePageSelected(0);
         adapter.registerDataSetObserver(indicator.getDataSetObserver());
 

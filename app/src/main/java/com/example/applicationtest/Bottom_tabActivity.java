@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -202,6 +203,18 @@ public class Bottom_tabActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK && frament2.mwebView.canGoBack())
+        {
+            frament2.mwebView.goBack();
+            return true;
+        }else {
+            return super.onKeyDown(keyCode,event);
+        }
+    }
+
     private void requestPermission()
     {
         locationClient = new LocationClient(Bottom_tabActivity.this.getApplicationContext());

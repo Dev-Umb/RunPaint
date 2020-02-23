@@ -17,11 +17,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
-            android:id="@+id/webView_back"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:background="#00000000"/>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"

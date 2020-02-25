@@ -15,10 +15,8 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,14 +88,6 @@ public class InformationCard extends AppCompatActivity {
                 textView[i].setTop(20);
                 linearLayout.addView(textView[i]);
             }
-
-        RadioButton back = findViewById(R.id.returned);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
     private void openAlbum()
     {

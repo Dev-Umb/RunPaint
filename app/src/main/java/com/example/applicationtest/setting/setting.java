@@ -55,7 +55,7 @@ public class setting extends AppCompatActivity {
     {
         List<String> data = new ArrayList<>();
         data.add("  天依蓝");
-        data.add("   天依蓝");
+        data.add("  活力橙");
         data.add("  阳光黄");
         data.add("  乐正红");
         data.add("  极简白");

@@ -7,7 +7,6 @@
     tools:context=".SideBar.InformationCard"
     android:orientation="vertical"
     android:background="#ffffff">
-    <include layout="@layout/title"/>
 
     <FrameLayout
         android:layout_width="match_parent"

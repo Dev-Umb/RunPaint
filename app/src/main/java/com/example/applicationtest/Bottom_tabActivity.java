@@ -38,6 +38,7 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.bumptech.glide.Glide;
 import com.example.applicationtest.BaiduMap.MyBaiduMap;
 import com.example.applicationtest.Frament.BroadCastManager;
 import com.example.applicationtest.Frament.Frament1;
@@ -285,8 +286,12 @@ public class Bottom_tabActivity extends AppCompatActivity {
         String url = sharedPreferences.getString("头像",null);
         if (url!=null)
         {
-            ImageLoader.getInstance().displayImage(url,imageView);
-            ImageLoader.getInstance().displayImage(url,ImageViewSide);
+            Glide.with(getApplicationContext())
+                .load(url)
+                .into(imageView);
+            Glide.with(getApplicationContext())
+                    .load(url)
+                    .into(ImageViewSide);
         }
         Initor_Broadcast();
         ButterKnife.bind(this);//减少findViewById和setOnClickListener的使用，一键绑定

@@ -96,6 +96,7 @@ dependencies {
     implementation files('libs\\BaiduLBS_Android.jar')
     implementation 'com.qq.mta:mta:3.4.2'
     //MID基础包
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.tencent.mid:mid:3.73-release'
 }

@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.bumptech.glide.Glide;
 import com.example.applicationtest.BaiduMap.MyBaiduMap;
 import com.example.applicationtest.Bottom_tabActivity;
 import com.example.applicationtest.R;
@@ -186,7 +187,10 @@ public class Frament1 extends Fragment {
                             }
                             everyDayText.setTextSize(15);
                             everyDayText.setGravity(Gravity.CENTER_HORIZONTAL);
-                            ImageLoader.getInstance().displayImage(uri, everyImage);
+                            //ImageLoader.getInstance().displayImage(uri, everyImage);
+                            Glide.with(getContext())
+                                    .load(uri)
+                                    .into(everyImage);
                         }
                     });
                 }

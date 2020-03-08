@@ -6,19 +6,25 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.format.Time;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -27,6 +33,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -48,10 +55,12 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.applicationtest.Bottom_tabActivity;
 import com.example.applicationtest.R;
-import com.example.applicationtest.instor.newDialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.applicationtest.R.id.BaiduMapView;
 import static com.example.applicationtest.R.id.Change_back;
@@ -68,6 +77,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         private MapView mapView = null;
         public com.baidu.mapapi.map.BaiduMap mbaiduMap;
         public LocationClient locationClient;
+        private DrawerLayout drawerLayout;
         private BDLocationListener myListener;
         private com.baidu.mapapi.model.LatLng latLng;
         private boolean isFirstLoc =true;
@@ -77,12 +87,47 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         private RadioButton radioButton;
         private Button button,exit,find_history;
         private ImageView drawing;
+        private ListView listView;
+        private List<String> list;
+        private Handler handler;
+        private Gson gson;
+         private ArrayAdapter<String> adapter;
         //以下是鹰眼标识
         private List<LatLng> latLngs ;
         int cnt=0;
         private AlertDialog.Builder builder;
         private BitmapDescriptor bitmapDescriptor,bitmapDescriptor1;
         private String str,user;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)  {
+
+        super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
+        setContentView(R.layout.activity_baidu_map);
+        handler = new Handler();
+        Intent intent = getIntent();
+        user = intent.getStringExtra("UserName");
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        latLngs = new ArrayList<>();
+        mapView = findViewById(BaiduMapView);
+        setTitle();
+        initMap();
+        initLocation();
+        SharedPreferences sharedPreferences=getSharedPreferences(user+"Sign",MODE_PRIVATE);
+        Map<String,?> signList=sharedPreferences.getAll();
+        list=new ArrayList<>(signList.keySet());
+        if (list.size()==0)
+        {
+            list.add("暂时没有记录哦，快去跑步吧");
+        }
+        adapter=new ArrayAdapter<>(MyBaiduMap.this,R.layout.list_item2,list);
+        listView.setAdapter(adapter);
+        listOnclick();
+        if(ContextCompat.checkSelfPermission(MyBaiduMap.this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(MyBaiduMap.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
+        }
+    }
     public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
@@ -91,7 +136,12 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
             {
                 return;
             }
-            MyLocationData locationData  =new MyLocationData.Builder().accuracy(bdLocation.getRadius()).direction(bdLocation.getDirection()).latitude(bdLocation.getLatitude()).longitude(bdLocation.getLongitude()).build();
+            MyLocationData locationData  =new MyLocationData.Builder()
+                    .accuracy(bdLocation.getRadius())
+                    .direction(bdLocation.getDirection())
+                    .latitude(bdLocation.getLatitude())
+                    .longitude(bdLocation.getLongitude())
+                    .build();
             mbaiduMap.setMyLocationData(locationData);
             if(isFirstLoc)
             {
@@ -136,7 +186,6 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.stopmin);
                 OverlayOptions overlayOptions2 = new MarkerOptions().position(latLngs.get(cnt-1)).icon(bitmapDescriptor).perspective(true).flat(true).draggable(true);
                 mbaiduMap.addOverlay(overlayOptions2);
-                latLngs.clear();
             }
             Button_Onclick();
 
@@ -144,7 +193,6 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
     }
     private void save_NameBuilder()
     {
-
         final EditText et = new EditText(this);
         new AlertDialog.Builder(this).setTitle("请输入轨迹名称")
                 .setIcon(android.R.drawable.sym_def_app_icon)
@@ -158,42 +206,90 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                     }
                 }).setNegativeButton("取消",null).show();
     }
+
     Runnable Sql = new Runnable() {
+        @SuppressLint("ApplySharedPref")
         @Override
         public void run() {
             Time time = new Time();
-                if (str == null) {
-                    str = time.year + "." + time.month + 1 + "." + time.monthDay + "." + time.hour;
+            if (str == null || str == "") {
+                str = time.year + "." + time.month + 1 + "." + time.monthDay + "." + time.hour;
+            }
+            int i = 0;
+            if (latLngs.size() > 2) {
+                SharedPreferences sharedPreferences1 = getSharedPreferences(user + "Sign", MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+                List<String> latitudes = new ArrayList<String>();
+                List<String> longitudes = new ArrayList<String>();
+                for (LatLng a : latLngs) {
+                    latitudes.add(String.valueOf(a.latitude));
+                    longitudes.add(String.valueOf(a.longitude));
                 }
-                int i = 0;
 
-                if (latLngs!=null) {
-                    try {
+                SharedPreferences sharedPreferences = getSharedPreferences(str, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                String latit = gson.toJson(latitudes);
+                String longs = gson.toJson(longitudes);
+                editor.putString("latit", latit);
+                editor.putString("longs", longs);
+
+
+                editor1.putString(str, str);
+
+                editor1.commit();
+                editor.commit();
+                SharedPreferences sharedPreferences2 = getSharedPreferences(str, MODE_PRIVATE);
+                String test = sharedPreferences2.getString("latit", null);
+                try {
+
+                    if (test != "[]" && (sharedPreferences2.getString("latit", null)) != "[]") {
+                        if (list.get(0) == "暂时没有记录哦，快去跑步吧") {
+                            list.remove(list.get(0));
+                        }
                         Toast.makeText(getApplicationContext(), "数据保存成功", Toast.LENGTH_SHORT).show();
-                    }catch (Exception e)
-                    {
-                        Looper.prepare();
+                        list.add(str);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Looper.prepare();
+                    if ((test != null && test != "[]")) {
+                        if (list.get(0) == "暂时没有记录哦，快去跑步吧") {
+                            list.remove(list.get(0));
+                        }
                         Toast.makeText(getApplicationContext(), "数据保存成功", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
-                    }
-                    latLngs.clear();
-                }else {
-                    try {
+                        list.add(str);
+                    } else {
                         Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
-                    }catch (Exception e)
-                    {
-                        Looper.prepare();
-                        Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                     }
+
+                    Looper.loop();
+                } finally {
+                    new Thread() {
+                        public void run() {
+                            handler.post(adapterUi);
+                        }
+                    }.start();
                 }
+                latLngs.clear();
+            } else {
+
+                Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+    Runnable adapterUi=new Runnable() {
+        @Override
+        public void run() {
+            adapter.notifyDataSetChanged();
         }
     };
     private void Button_Onclick() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (latLngs.size()!=0) {
+                if (latLngs.size()>3) {
                     save_NameBuilder();
                     if (draw && cnt >= 2) {
                         bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.stopmin);
@@ -203,6 +299,16 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                     }
                     exit.setVisibility(View.GONE);
                     button.setVisibility(View.GONE);
+                    drawing.setVisibility(View.VISIBLE);
+                }else {
+                    try {
+                        Toast.makeText(getApplicationContext(),"轨迹太短了哦，再多跑一会吧",Toast.LENGTH_SHORT).show();
+                    }catch (Exception e)
+                    {
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(),"轨迹太短了哦，再多跑一会吧",Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }
                 }
             }
         });
@@ -217,11 +323,13 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                     exit.setVisibility(View.GONE);
                     button.setVisibility(View.GONE);
                     draw=false;
-                } else {
+                }
+                else {
                     Toast.makeText(MyBaiduMap.this,"绘制已开启",Toast.LENGTH_SHORT).show();
                     button.setVisibility(View.VISIBLE);
                     exit.setVisibility(View.VISIBLE);
                     draw=true;
+                    drawing.setVisibility(View.GONE);
                 }
             }
         });
@@ -232,14 +340,50 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 exit.setVisibility(View.GONE);
                 button.setVisibility(View.GONE);
                 draw=false;
+                drawing.setVisibility(View.VISIBLE);
             }
         });
         find_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyBaiduMap.this, newDialog.class);
-                intent.putExtra("UserName",user);
-                startActivity(intent);
+                drawerLayout.openDrawer(Gravity.RIGHT);
+            }
+        });
+
+
+    }
+    private void listOnclick()
+    {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                drawerLayout.closeDrawer(Gravity.RIGHT);
+                SharedPreferences sharedPreferences = getSharedPreferences(list.get(position), MODE_PRIVATE);
+                try {
+                    String latit = sharedPreferences.getString("latit", null);
+                    String longs = sharedPreferences.getString("longs", null);
+                    if (latit != null && longs != null && latit != "[]" && longs != "[]") {
+                        List<String> lat = gson.fromJson(latit, new TypeToken<List<String>>() {
+                        }.getType());
+                        List<String> lon = gson.fromJson(longs, new TypeToken<List<String>>() {
+                        }.getType());
+                        List<LatLng> latLngs = new ArrayList<>();
+                        for (int i = 0; i < lat.size(); i++) {
+                            LatLng latLng = new LatLng(Double.valueOf(lat.get(i)), Double.valueOf(lon.get(i)));
+                            latLngs.add(latLng);
+                        }
+                        bitmapDescriptor1 = BitmapDescriptorFactory.fromResource(R.drawable.startmin);
+                        OverlayOptions overlayOptions_start = new MarkerOptions().position(latLngs.get(0)).icon(bitmapDescriptor1).perspective(true).flat(true).draggable(true);
+                        mbaiduMap.addOverlay(overlayOptions_start);
+                        bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.stopmin);
+                        OverlayOptions overlayOptions2 = new MarkerOptions().position(latLngs.get(latLngs.size()-1)).icon(bitmapDescriptor).perspective(true).flat(true).draggable(true);
+                        mbaiduMap.addOverlay(overlayOptions2);
+                        OverlayOptions overlayOptions = new PolylineOptions().width(15).color(Color.BLUE).points(latLngs);
+                        Overlay overlay = mbaiduMap.addOverlay(overlayOptions);
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "数据有误！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -257,25 +401,15 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         }
     }
     @SuppressLint("ResourceAsColor")
-    @Override
-    protected void onCreate(Bundle savedInstanceState)  {
-        super.onCreate(savedInstanceState);
-        SDKInitializer.initialize(getApplicationContext());
-        setContentView(R.layout.activity_baidu_map);
-        Intent intent = getIntent();
-        user = intent.getStringExtra("UserName");
-        latLngs = new ArrayList<>();
-        mapView = findViewById(BaiduMapView);
-        setTitle();
-        initMap();
-        initLocation();
-        if(ContextCompat.checkSelfPermission(MyBaiduMap.this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(MyBaiduMap.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
-        }
-    }
+
+
     private void initMap()
     {
+        listView=findViewById(R.id.history_list);
+        gson=new Gson();
+        drawerLayout=findViewById(R.id.map_draw);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,Gravity.RIGHT);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,Gravity.RIGHT);
         drawing = findViewById(R.id.draw);
         builder = new AlertDialog.Builder(getApplicationContext());
         builder.setTitle("设置名称");

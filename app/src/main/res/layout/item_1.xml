@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:textSize="30dp"
             android:id="@+id/title_color"
+            android:textIsSelectable="true"
             />
         </LinearLayout>
 

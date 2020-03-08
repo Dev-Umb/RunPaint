@@ -33,9 +33,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".setting.setting"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity
-            android:name=".instor.newDialog"
-            android:theme="@style/dialog3" />
 
         <uses-library
             android:name="org.apache.http.legacy"

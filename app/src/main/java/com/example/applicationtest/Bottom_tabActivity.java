@@ -311,6 +311,7 @@ public class Bottom_tabActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(Bottom_tabActivity.this,new String[]{Manifest.permission.INTERNET},1);
         }
+
     }
     private void changedTheme()
     {

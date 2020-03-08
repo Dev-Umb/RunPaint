@@ -14,11 +14,11 @@
         android:orientation="vertical">
     <include layout="@layout/title2"/>
     <com.example.applicationtest.instor.CustomViewPager
-        android:id="@+id/viewPager"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-             android:layout_height="0dp"
-             android:layout_weight="1"
-        android:background="@color/colorPrimary">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary">
 
     </com.example.applicationtest.instor.CustomViewPager>
     <com.google.android.material.tabs.TabLayout
@@ -146,7 +146,7 @@
                         android:text="设置"
                         android:textSize="20dp"
                         android:textColor="@color/酷炫黑" />
-</LinearLayout>
+            </LinearLayout>
         </FrameLayout>
     </LinearLayout>
 

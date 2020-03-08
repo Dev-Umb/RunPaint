@@ -100,7 +100,6 @@ public class MyFriendList extends AppCompatActivity {
         final ListView content_View = findViewById(R.id.FriendlistView);
         adapter=new ArrayAdapter<String>(this,R.layout.list_item2,contactList);
         content_View.setAdapter(adapter);
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},1);
@@ -111,30 +110,29 @@ public class MyFriendList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String phone = contactList.get(position);
-                boolean flag=true;
-                String number =null;
+                boolean flag = true;
+                String number = null;
                 StringBuffer stringBuffer = null;
                 for (int i = 0; i < phone.length(); i++) {
 
-                 if (!flag) {
-                     if (number == null) {
-                         number = String.valueOf(phone.charAt(i));
-                         stringBuffer = new StringBuffer(number);
-                     } else {
-                         stringBuffer.append(phone.charAt(i));
-                     }
-                 }
-                 if (phone.charAt(i)=='\n')
-                 {
-                     flag=false;
-                 }
+                    if (!flag) {
+                        if (number == null) {
+                            number = String.valueOf(phone.charAt(i));
+                            stringBuffer = new StringBuffer(number);
+                        } else {
+                            stringBuffer.append(phone.charAt(i));
+                        }
+                    }
+                    if (phone.charAt(i) == '\n') {
+                        flag = false;
+                    }
                 }
                 if (!TextUtils.isEmpty(number)) {
                     Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + stringBuffer));
                     startActivity(intent);
-                    overridePendingTransition(R.anim.in_from_dight,R.anim.out_to_left);
+                    overridePendingTransition(R.anim.in_from_dight, R.anim.out_to_left);
                 }
-                }
+            }
         });
     }
     private void readContacts()

@@ -289,12 +289,19 @@ public class Frament1 extends Fragment {
         public void run() {
 
                 Bundle bundle = getArguments();
-                if (bundle.getString("address")!=null ){
-                    address = bundle.getString("address");
-                    fetchDataByPost();
-                }else {
-                    Toast.makeText(getContext(),"请求失败！",Toast.LENGTH_SHORT).show();
-            }
+                try {
+
+                    if (bundle.getString("address") != null) {
+                        address = bundle.getString("address");
+                        BroadCastManager.unregisterRecive(getActivity(),BroadCastManager.getReceiver());
+                        fetchDataByPost();
+                    } else {
+                        Toast.makeText(getContext(), "请求失败！", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e)
+                {
+                    Toast.makeText(getContext(), "请求失败！", Toast.LENGTH_SHORT).show();
+                }
         }
     };
     private int search_ic(String weather)

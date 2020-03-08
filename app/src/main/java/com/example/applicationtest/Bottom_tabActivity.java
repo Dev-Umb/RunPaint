@@ -127,6 +127,7 @@ public class Bottom_tabActivity extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("address", address);
                             BroadCastManager.getInstance().sendBroadCast(Bottom_tabActivity.this,intent);
+
                             frament1.setArguments(bundle);
                         } else {
                             cnt = 0;

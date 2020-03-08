@@ -255,8 +255,10 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 } catch (Exception e) {
                     Looper.prepare();
                     if ((test != null && test != "[]")) {
-                        if (list.get(0) == "暂时没有记录哦，快去跑步吧") {
-                            list.remove(list.get(0));
+                        if (list.size()!=0) {
+                            if (list.get(0) == "暂时没有记录哦，快去跑步吧") {
+                                list.remove(list.get(0));
+                            }
                         }
                         Toast.makeText(getApplicationContext(), "数据保存成功", Toast.LENGTH_SHORT).show();
                         list.add(str);
@@ -274,7 +276,6 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 }
                 latLngs.clear();
             } else {
-
                 Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
             }
         }

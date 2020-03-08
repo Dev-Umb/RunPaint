@@ -7,10 +7,11 @@ import android.content.IntentFilter;
 
 public class BroadCastManager {
     private static BroadCastManager broadCastManager= new BroadCastManager();
-    private BroadcastReceiver receiver;
+    private static BroadcastReceiver receiver;
     public static BroadCastManager getInstance()
     {
-        return broadCastManager;}
+        return broadCastManager;
+    }
     //注册接收者
     public void registerRecive(Activity activity, BroadcastReceiver receiver, IntentFilter intentFilter)
     {
@@ -21,13 +22,15 @@ public class BroadCastManager {
     public void sendBroadCast(Activity activity, Intent intent)
     {
         activity.sendBroadcast(intent);
+
     }
-    public BroadcastReceiver getReceiver()
+    public static BroadcastReceiver getReceiver()
     {
+
         return receiver;
     }
 
-    public void unregisterRecive(Activity activity,BroadcastReceiver receiver)
+    public static void unregisterRecive(Activity activity,BroadcastReceiver receiver)
 
     {
         activity.unregisterReceiver(receiver);

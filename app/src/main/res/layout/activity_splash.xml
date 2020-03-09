@@ -20,20 +20,5 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"/>
 
-<!--    </androidx.viewpager.widget.ViewPager>-->
-<!--    <me.relex.circleindicator.CircleIndicator-->
-<!--        android:id="@+id/circle"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        app:ci_gravity="center"-->
-<!--        app:ci_drawable="@drawable/ball"-->
-<!--        app:ci_radius="10dp"-->
-<!--        app:ci_margin="5dp"-->
-<!--        app:ci_mode="outside"-->
-<!--        app:ci_background="#66ccff"-->
-<!--        app:ci_selected_background="#000000"-->
-<!--        />-->
-
 
 </RelativeLayout>

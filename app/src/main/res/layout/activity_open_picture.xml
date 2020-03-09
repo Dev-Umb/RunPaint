@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".first.OpenPicture"
-    android:background="@drawable/open_picture">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:background="@color/极简白"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/ic_picture"
+        android:layout_gravity="center"
+        android:layout_marginBottom="150dp"
+        />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/run"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/bottom_serves"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom"/>
+</FrameLayout>

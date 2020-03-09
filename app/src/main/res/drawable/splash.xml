@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/极简白"/>
+    <item android:bottom="150dp">
+        <bitmap android:src="@drawable/open_picture"
+            android:layout_gravity="center"
+            />
+    </item>
+</layer-list>

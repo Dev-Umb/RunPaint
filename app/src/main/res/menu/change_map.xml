@@ -6,16 +6,6 @@
         android:title="复位"
         android:icon="@color/colorPrimary"
         />
-        <item
-            android:id="@+id/Change_start"
-            android:title="卫星"
-            android:icon="@color/colorPrimary"
-            />
-        <item
-            android:id="@+id/Change_putong"
-            android:title="普通"
-            android:icon="@color/colorPrimary"
-            />
     <item
         android:id="@+id/Change_traffic"
         android:title="交通图"
@@ -27,8 +17,9 @@
     android:icon="@color/colorPrimary"
         />
     <item
-        android:id="@+id/openDraw"
-        android:title="绘制"
+        android:id="@+id/DIY_Sign"
+        android:title="自定义轨迹"
+        android:icon="@color/colorPrimary"
         />
 
 </menu>

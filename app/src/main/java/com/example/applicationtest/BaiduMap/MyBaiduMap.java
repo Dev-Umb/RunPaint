@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
@@ -65,11 +66,10 @@ import java.util.Map;
 import static com.example.applicationtest.R.id.BaiduMapView;
 import static com.example.applicationtest.R.id.Change_back;
 import static com.example.applicationtest.R.id.Change_hot;
-import static com.example.applicationtest.R.id.Change_putong;
-import static com.example.applicationtest.R.id.Change_start;
 import static com.example.applicationtest.R.id.Change_traffic;
+import static com.example.applicationtest.R.id.DIYColor;
+import static com.example.applicationtest.R.id.DIY_Sign;
 import static com.example.applicationtest.R.id.add_more;
-import static com.example.applicationtest.R.id.openDraw;
 import static com.example.applicationtest.R.id.saveSign;
 import static com.example.applicationtest.R.id.side_title;
 
@@ -91,6 +91,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         private List<String> list;
         private Handler handler;
         private Gson gson;
+        private LinearLayout l;
          private ArrayAdapter<String> adapter;
         //以下是鹰眼标识
         private List<LatLng> latLngs ;
@@ -98,6 +99,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         private AlertDialog.Builder builder;
         private BitmapDescriptor bitmapDescriptor,bitmapDescriptor1;
         private String str,user;
+        private int map_sign_write;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
 
@@ -178,7 +180,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 mbaiduMap.addOverlay(overlayOptions2);
                 cnt++;
                 if (latLngs.size() >= 2) {
-                    OverlayOptions overlayOptions = new PolylineOptions().width(15).color(Color.BLUE).points(latLngs);
+                    OverlayOptions overlayOptions = new PolylineOptions().width(15).color(map_sign_write).points(latLngs);
                     Overlay overlay = mbaiduMap.addOverlay(overlayOptions);
                 }
             }else if (cnt>=2)
@@ -280,6 +282,73 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
             }
         }
     };
+    private void sign_color()
+    {
+        Button Diy_Blue,DIY_yellow,DIY_Pink,DIY_Black,DIY_Orange,DIY_green,DIY_RED;
+        Diy_Blue=findViewById(R.id.DIY_BLUE);
+        Diy_Blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已设置轨迹为淡蓝色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(102,204,255);
+                l.setVisibility(View.GONE);
+            }
+        });
+        DIY_RED=findViewById(R.id.DIY_RED);
+        DIY_RED.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已设置轨迹为红色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(255,0,0);
+                l.setVisibility(View.GONE);
+            }
+        });
+        DIY_Pink = findViewById(R.id.DIY_PINK);
+        DIY_Pink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已设置轨迹为粉色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(239,217,245);
+                l.setVisibility(View.GONE);
+            }
+        });
+        DIY_Black=findViewById(R.id.DIY_BLACK);
+        DIY_Black.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已设置轨迹为黑色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(0,0,0);
+                l.setVisibility(View.GONE);
+            }
+        });
+        DIY_green=findViewById(R.id.DIY_GREEN);
+        DIY_green.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已设置轨迹为绿色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(76,175,80);
+                l.setVisibility(View.GONE);
+            }
+        });
+        DIY_yellow=findViewById(R.id.DIY_YELLOW);
+        DIY_yellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已设置轨迹为黄色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(255,235,59);
+                l.setVisibility(View.GONE);
+            }
+        });
+        DIY_Orange=findViewById(R.id.DIY_ORANGE);
+        DIY_Orange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(),"已设置轨迹为橙色",Toast.LENGTH_SHORT).show();
+                map_sign_write=Color.rgb(255,152,0);
+            }
+        });
+    }
     Runnable adapterUi=new Runnable() {
         @Override
         public void run() {
@@ -287,6 +356,8 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         }
     };
     private void Button_Onclick() {
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -369,8 +440,12 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                         List<String> lon = gson.fromJson(longs, new TypeToken<List<String>>() {
                         }.getType());
                         List<LatLng> latLngs = new ArrayList<>();
-                        for (int i = 0; i < lat.size(); i++) {
-                            LatLng latLng = new LatLng(Double.valueOf(lat.get(i)), Double.valueOf(lon.get(i)));
+                        latLngs.add(latLng);
+                        double templatings,tempLong;
+                        for (int i = 0; i < lat.size()-1; i++) {
+                           templatings=latLngs.get(i).latitude+Double.valueOf(lat.get(i+1))-Double.valueOf(lat.get(i));
+                           tempLong=latLngs.get(i).longitude+Double.valueOf(lon.get(i+1))-Double.valueOf(lon.get(i));
+                            LatLng latLng = new LatLng(templatings, tempLong);
                             latLngs.add(latLng);
                         }
                         bitmapDescriptor1 = BitmapDescriptorFactory.fromResource(R.drawable.startmin);
@@ -379,7 +454,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                         bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.stopmin);
                         OverlayOptions overlayOptions2 = new MarkerOptions().position(latLngs.get(latLngs.size()-1)).icon(bitmapDescriptor).perspective(true).flat(true).draggable(true);
                         mbaiduMap.addOverlay(overlayOptions2);
-                        OverlayOptions overlayOptions = new PolylineOptions().width(15).color(Color.BLUE).points(latLngs);
+                        OverlayOptions overlayOptions = new PolylineOptions().width(15).color(map_sign_write).points(latLngs);
                         Overlay overlay = mbaiduMap.addOverlay(overlayOptions);
                     }
                 } catch (Exception e) {
@@ -406,6 +481,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
 
     private void initMap()
     {
+        map_sign_write=Color.rgb(102,204,255);
         listView=findViewById(R.id.history_list);
         gson=new Gson();
         drawerLayout=findViewById(R.id.map_draw);
@@ -460,16 +536,10 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case Change_putong:
-                                mbaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-                                return true;
                             case Change_back:
                                 isFirstLoc = true;
                                 MapStatusUpdate mapStatusUpdateFactory = MapStatusUpdateFactory.newLatLng(latLng);
                                 mbaiduMap.animateMapStatus(mapStatusUpdateFactory);
-                                return true;
-                            case Change_start:
-                                mbaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
                                 return true;
                             case Change_traffic:
                                 if (isTraffic) {
@@ -489,19 +559,10 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                                     isHot = true;
                                 }
                                 break;
-                            case openDraw:
-                                if (draw)
-                                {
-                                    Toast.makeText(MyBaiduMap.this,"绘制已关闭",Toast.LENGTH_SHORT).show();
-                                    button.setVisibility(View.GONE);
-                                    exit.setVisibility(View.GONE);
-                                    draw=false;
-                                }else {
-                                    Toast.makeText(MyBaiduMap.this,"绘制已开启",Toast.LENGTH_SHORT).show();
-                                    button.setVisibility(View.VISIBLE);
-                                    exit.setVisibility(View.VISIBLE);
-                                    draw=true;
-                                }
+                            case DIY_Sign:
+                                l = findViewById(DIYColor);
+                                sign_color();
+                                l.setVisibility(View.VISIBLE);
                             default:
                         }
                     return false;
@@ -566,7 +627,6 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
 
     }
 
@@ -579,8 +639,9 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()){
+
+
         }
     }
 }

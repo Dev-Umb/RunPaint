@@ -16,10 +16,12 @@
         android:orientation="vertical"
         >
         <include layout="@layout/title"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
+
         <com.baidu.mapapi.map.MapView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -73,6 +75,100 @@
                 android:src="@drawable/draw"
                 android:id="@+id/draw"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/DIYColor"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:background="@drawable/dialog_shape"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/天依蓝"
+                    android:id="@+id/DIY_BLUE"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="#EFD9F5"
+                    android:id="@+id/DIY_PINK"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="#4CAF50"
+                    android:id="@+id/DIY_GREEN"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/酷炫黑"
+                    android:id="@+id/DIY_BLACK"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/阳光黄"
+                    android:id="@+id/DIY_YELLOW"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/活力橙"
+                    android:id="@+id/DIY_ORANGE"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/乐正红"
+                    android:id="@+id/DIY_RED"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/极简白"
+                    />
+
+            </LinearLayout>
         </FrameLayout>
     </LinearLayout>
     <LinearLayout

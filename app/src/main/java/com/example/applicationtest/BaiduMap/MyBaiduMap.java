@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.format.Time;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -54,6 +56,7 @@ import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.applicationtest.Bottom_tabActivity;
 import com.example.applicationtest.R;
 import com.google.gson.Gson;
@@ -88,13 +91,15 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
         private Button button,exit,find_history;
         private ImageView drawing;
         private ListView listView;
-        private List<String> list;
+        private List<String> list,DIY_signsname;
         private Handler handler;
         private Gson gson;
         private LinearLayout l;
          private ArrayAdapter<String> adapter;
         //以下是鹰眼标识
-        private List<LatLng> latLngs ;
+        private List<LatLng> latLngs;
+        private GridView gridView;
+        private LinearLayout bottom_lin;
         int cnt=0;
         private AlertDialog.Builder builder;
         private BitmapDescriptor bitmapDescriptor,bitmapDescriptor1;
@@ -130,14 +135,19 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
             ActivityCompat.requestPermissions(MyBaiduMap.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
         }
     }
+    private void init_grid()
+    {
+
+    }
     public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            latLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
             if (bdLocation==null||mapView==null)
             {
+
                 return;
             }
+            latLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
             MyLocationData locationData  =new MyLocationData.Builder()
                     .accuracy(bdLocation.getRadius())
                     .direction(bdLocation.getDirection())
@@ -174,6 +184,13 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
             }
 
             if (draw) {
+                if (latLngs.size()>3)
+                {
+                    if (DistanceUtil.getDistance(latLng,latLngs.get(latLngs.size()-1))>20)
+                    {
+                        return;
+                    }
+                }
                 latLngs.add(latLng);
                 bitmapDescriptor1 = BitmapDescriptorFactory.fromResource(R.drawable.startmin);
                 OverlayOptions overlayOptions2 = new MarkerOptions().position(latLngs.get(0)).icon(bitmapDescriptor1).perspective(true).flat(true).draggable(true);
@@ -190,6 +207,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 mbaiduMap.addOverlay(overlayOptions2);
             }
             Button_Onclick();
+
 
         }
     }
@@ -251,6 +269,8 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                         }
                         Toast.makeText(getApplicationContext(), "数据保存成功", Toast.LENGTH_SHORT).show();
                         list.add(str);
+                        bottom_lin.setVisibility(View.VISIBLE);
+                        delet_Point();
                     } else {
                         Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
                     }
@@ -263,7 +283,9 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                             }
                         }
                         Toast.makeText(getApplicationContext(), "数据保存成功", Toast.LENGTH_SHORT).show();
+                        bottom_lin.setVisibility(View.VISIBLE);
                         list.add(str);
+                        delet_Point();
                     } else {
                         Toast.makeText(getApplicationContext(), "数据保存失败", Toast.LENGTH_SHORT).show();
                     }
@@ -282,6 +304,10 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
             }
         }
     };
+    private void delet_Point()
+    {
+        mbaiduMap.clear();
+    }
     private void sign_color()
     {
         Button Diy_Blue,DIY_yellow,DIY_Pink,DIY_Black,DIY_Orange,DIY_green,DIY_RED;
@@ -372,6 +398,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                     exit.setVisibility(View.GONE);
                     button.setVisibility(View.GONE);
                     drawing.setVisibility(View.VISIBLE);
+                    bottom_lin.setVisibility(View.VISIBLE);
                 }else {
                     try {
                         Toast.makeText(getApplicationContext(),"轨迹太短了哦，再多跑一会吧",Toast.LENGTH_SHORT).show();
@@ -402,6 +429,7 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                     exit.setVisibility(View.VISIBLE);
                     draw=true;
                     drawing.setVisibility(View.GONE);
+                    bottom_lin.setVisibility(View.GONE);
                 }
             }
         });
@@ -413,6 +441,8 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
                 button.setVisibility(View.GONE);
                 draw=false;
                 drawing.setVisibility(View.VISIBLE);
+                delet_Point();
+                bottom_lin.setVisibility(View.VISIBLE);
             }
         });
         find_history.setOnClickListener(new View.OnClickListener() {
@@ -478,9 +508,44 @@ public class MyBaiduMap extends Activity implements View.OnClickListener{
     }
     @SuppressLint("ResourceAsColor")
 
+    private void add_DIY_name()
+    {
+        DIY_signsname = new ArrayList<>();
+        DIY_signsname.add("心形线");
+        DIY_signsname.add("520");
+        DIY_signsname.add("Love~");
+        DIY_signsname.add("加油！");
+        DIY_signsname.addAll(DIY_signsname);
 
+    }
+    private void setGridView()
+    {
+        int size=DIY_signsname.size();
+        int length=100;
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (size * (length + 4) * density);
+        int itemWidth = (int) (length * density);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gridView.setColumnWidth(itemWidth); // 设置列表项宽
+        gridView.setHorizontalSpacing(5); // 设置列表项水平间距
+        gridView.setStretchMode(GridView.NO_STRETCH);
+        gridView.setNumColumns(size); // 设置列数量=列表集合数
+
+        GridViewAdapter adapter = new GridViewAdapter(getApplicationContext(), DIY_signsname);
+        gridView.setAdapter(adapter);
+
+    }
     private void initMap()
     {
+        bottom_lin=findViewById(R.id.bottom_functions);
+        gridView=findViewById(R.id.Grid);
+        add_DIY_name();
+        setGridView();
         map_sign_write=Color.rgb(102,204,255);
         listView=findViewById(R.id.history_list);
         gson=new Gson();

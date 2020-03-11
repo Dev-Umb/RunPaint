@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    <ImageView
+        android:id="@+id/grid_Image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/error"
+        >
+    </ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grid_text"
+        android:text="title"
+        android:textColor="@color/酷炫黑"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+
+        />
+</LinearLayout>
